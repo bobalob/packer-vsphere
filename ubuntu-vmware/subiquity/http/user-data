@@ -1,0 +1,26 @@
+#cloud-config
+autoinstall:
+  version: 1
+  locale: en_US
+  keyboard:
+    layout: en
+    variant: us
+  storage:
+    layout:
+      name: lvm
+  identity:
+    hostname: vmubu1
+    username: dave
+    password: $6$2ucFMnJhxcRai4JL$j35xsgFjbeRWiY1ZZ1vd52pizORcrSnH1ViOBPm5s.E2KNVtRxuuvMVQM48wgx0xRqhxUv8YpQY5DjRbAqiIL.
+  ssh:
+    install-server: yes
+  packages:
+    - htop
+    - tmux
+    - whois
+    - dnsutils
+    - jq
+  user-data:
+    disable_root: false
+  late-commands:
+    - echo 'dave ALL=(ALL) NOPASSWD:ALL' > /target/etc/sudoers.d/dave

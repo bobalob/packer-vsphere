@@ -1,0 +1,87 @@
+{
+  "variables": {
+    "hostname": "ubuntu",
+    "username": "ubuntu",
+    "password": "ubuntu",
+    "vcenter_server": "vcenter.int.superautomation.co.uk",
+    "vcenter_user": "administrator@vsphere.local",
+    "vcenter_password": "",
+    "vcenter_cluster": "miniesx.int.superautomation.co.uk",
+    "vcenter_datacenter": "Home",
+    "vcenter_network": "LAN",
+    "vcenter_datastore": "Crucial500G",
+    "vcenter_iso_path": "[Sandisk480G] ISO/ubuntu-22.04.1-live-server-amd64.iso",
+    "temp_ip": "192.168.2.90",
+    "temp_mask": "255.255.255.0",
+    "temp_gw": "192.168.2.254",
+    "temp_dns": "192.168.2.254"
+  },
+  "builders": [
+    {
+      "type": "vsphere-iso",
+      "CPUs": 2,
+      "RAM": 2048,
+      "firmware": "efi",
+      "RAM_reserve_all": false,
+      "force_bios_setup": false,
+      "boot_wait": "10s",
+      "boot_command": [
+        "e<wait><down><down><down><end>",
+        " autoinstall ip={{user `temp_ip`}}::{{user `temp_gw`}}:{{user `temp_mask`}}::::{{user `temp_dns`}} 'ds=nocloud-net;s=http://{{ .HTTPIP }}:{{ .HTTPPort }}/'",
+        "<wait><F10><wait>"
+      ],
+      "disk_controller_type": "pvscsi",
+      "guest_os_type": "ubuntu64Guest",
+      "http_directory": "subiquity/http",
+      "http_port_min": 8020,
+      "http_port_max": 8030,
+      "insecure_connection": "true",
+      "storage": [
+        {
+          "disk_size": 40960,
+          "disk_thin_provisioned": true
+        }
+      ],
+      "datacenter": "{{user `vcenter_datacenter`}}",
+      "datastore": "{{user `vcenter_datastore`}}",
+      "cluster": "{{user `vcenter_cluster`}}",
+      "iso_paths": [
+        "{{user `vcenter_iso_path`}}"
+      ],
+      "network_adapters": [
+        {
+          "network": "{{user `vcenter_network`}}",
+          "network_card": "vmxnet3"
+        }
+      ],
+      "username": "{{user `vcenter_user`}}",
+      "password": "{{user `vcenter_password`}}",
+      "vcenter_server": "{{user `vcenter_server`}}",
+      "vm_name": "{{user `hostname`}}",
+      "ssh_username": "{{user `username`}}",
+      "ssh_password": "{{user `password`}}",
+      "ssh_pty": true,
+      "ssh_timeout": "30m",
+      "ssh_handshake_attempts": "200"
+    }
+  ],
+  "provisioners": [
+    {
+      "type": "file",
+      "source": "files/provision.sh",
+      "destination": "/home/{{user `username`}}/provision.sh"
+    },
+    {
+      "type": "file",
+      "source": "files/authorized_keys",
+      "destination": "/home/{{user `username`}}/.ssh/authorized_keys"
+    },
+    {
+      "type": "shell",
+      "inline": [
+        "chmod +x /home/{{user `username`}}/provision.sh",
+        "sudo /home/{{user `username`}}/provision.sh {{user `username`}}"
+      ]
+    }
+  ]
+}
