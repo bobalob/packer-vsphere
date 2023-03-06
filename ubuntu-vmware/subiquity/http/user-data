@@ -9,9 +9,9 @@ autoinstall:
     layout:
       name: lvm
   identity:
-    hostname: vmubu1
-    username: dave
-    password: $6$2ucFMnJhxcRai4JL$j35xsgFjbeRWiY1ZZ1vd52pizORcrSnH1ViOBPm5s.E2KNVtRxuuvMVQM48wgx0xRqhxUv8YpQY5DjRbAqiIL.
+    hostname: ubuntu
+    username: ubuntu
+    password: $6$j.M99XM1ye6WLGZ2$f3EadanStTiX/saAkVim38hetizCULswUmdSGP1iqy/2yBa6madElKCwYYJn/mQI20gXUoxW87fhAgxx32c7J/
   ssh:
     install-server: yes
   packages:
@@ -23,4 +23,4 @@ autoinstall:
   user-data:
     disable_root: false
   late-commands:
-    - echo 'dave ALL=(ALL) NOPASSWD:ALL' > /target/etc/sudoers.d/dave
+    - echo 'ubuntu ALL=(ALL) NOPASSWD:ALL' > /target/etc/sudoers.d/ubuntu
