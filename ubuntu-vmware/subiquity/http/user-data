@@ -11,7 +11,7 @@ autoinstall:
   identity:
     hostname: ubuntu
     username: ubuntu
-    password: $6$j.M99XM1ye6WLGZ2$f3EadanStTiX/saAkVim38hetizCULswUmdSGP1iqy/2yBa6madElKCwYYJn/mQI20gXUoxW87fhAgxx32c7J/
+    password: $6$RRahlEeL23Ch0J.Q$CrfrPOrh/aQCU7AOfxtY77qWxPhyd8Eu.lBaNNFJQjd9Jxxj3rpgvrf8f.BCdLcSmUIwUZep9x5CP03dqpckC.
   ssh:
     install-server: yes
   packages:

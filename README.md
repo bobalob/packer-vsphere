@@ -16,9 +16,12 @@ vcenter_iso_path = "[Datastore1] ISO/ubuntu-22.04.1-live-server-amd64.iso"
 vcenter_network = "VM network"
 vcenter_server = "vcenter.domain.local"
 vcenter_user = "administrator@vsphere.local"
+ssh_authorized_keys = [
+    "ssh-rsa AAAAB3NzaC1... user@box1",
+    "ssh-rsa AAAAB3NzaC1... user@box2"
+]
 ```
 
 The temporary IP is because in my environment, the machine would get a different DHCP assigned address after reboot and packer would not reconnect to the new IP.
 
 Build with ```./build.sh <hostname> <username> <initial-password>```
-

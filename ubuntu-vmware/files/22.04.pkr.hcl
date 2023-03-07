@@ -50,9 +50,22 @@ build {
     source      = "files/provision.sh"
   }
 
-  provisioner "file" {
-    destination = "/home/${var.username}/.ssh/authorized_keys"
-    source      = "files/authorized_keys"
+  provisioner "shell" {
+    inline = [
+      "touch /home/${var.username}/.ssh/authorized_keys"
+    ]
+  }
+
+  dynamic "provisioner" {
+    labels = [ "shell" ]
+    iterator = keys
+    for_each = var.ssh_authorized_keys
+
+    content {
+      inline = [
+        "echo ${keys.value} | tee -a /home/${var.username}/.ssh/authorized_keys"
+      ]
+    }
   }
 
   provisioner "shell" {

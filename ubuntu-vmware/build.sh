@@ -5,9 +5,6 @@ if [ $# -eq 0 ]
     exit 1
 fi
 
-# create authorized_keys if it doesn't exist
-touch -a ./files/authorized_keys
-
 hostname=$1
 username=$2
 rawpassword=$3
