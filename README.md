@@ -1,6 +1,6 @@
 # ubuntu-vmware
 
-Basic build template and script for packer vsphere-iso.
+Basic build template and script for packer vsphere-iso. See [my blog post](https://blog.superautomation.co.uk/2023/03/ubuntu-with-packer-on-vsphere.html) for more information.
 
 Create a new file called variables.auto.pkvars.hcl and add the following
 
