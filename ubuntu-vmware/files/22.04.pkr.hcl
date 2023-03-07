@@ -39,9 +39,6 @@ source "vsphere-iso" "ubuntu_vm" {
   vm_name        = "${var.hostname}"
 }
 
-# a build block invokes sources and runs provisioning steps on them. The
-# documentation for build blocks can be found here:
-# https://www.packer.io/docs/templates/hcl_templates/blocks/build
 build {
   sources = ["source.vsphere-iso.ubuntu_vm"]
 
@@ -58,12 +55,12 @@ build {
 
   dynamic "provisioner" {
     labels = [ "shell" ]
-    iterator = keys
+    iterator = authkey
     for_each = var.ssh_authorized_keys
 
     content {
       inline = [
-        "echo ${keys.value} | tee -a /home/${var.username}/.ssh/authorized_keys"
+        "echo ${authkey.value} | tee -a /home/${var.username}/.ssh/authorized_keys"
       ]
     }
   }
